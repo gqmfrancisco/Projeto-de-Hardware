@@ -3,9 +3,10 @@ from flask import Flask, jsonify
 
 from config import Config
 from database import db
-
-# Importar os modelos do banco
 from models import Colaborador, Evento, Usuario
+
+# Importar as rotas de colaboradores
+from routes.colaboradores import colaboradores_bp
 
 
 def create_app():
@@ -15,13 +16,16 @@ def create_app():
     # Carregar configuracoes
     app.config.from_object(Config)
 
-    # Conectar o banco ao Flask
+    # Inicializar o banco de dados
     db.init_app(app)
 
-    # Criar as tabelas
+    # Criar as tabelas caso ainda nao existam
     with app.app_context():
         db.create_all()
         print("BANCO DE DADOS INICIALIZADO!")
+
+    # Registrar a API de colaboradores
+    app.register_blueprint(colaboradores_bp)
 
     @app.route("/")
     def home():
@@ -44,6 +48,7 @@ app = create_app()
 
 
 if __name__ == "__main__":
+
     print("INICIANDO SERVIDOR FLASK...")
 
     app.run(
