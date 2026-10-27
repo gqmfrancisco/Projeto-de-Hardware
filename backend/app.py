@@ -4,9 +4,13 @@ from flask import Flask, jsonify
 from config import Config
 from database import db
 from models import Colaborador, Evento, Usuario
+from routes.eventos import eventos_bp
 
 # Importar as rotas de colaboradores
 from routes.colaboradores import colaboradores_bp
+
+# Registrar as APIs
+from routes.acessos import acessos_bp
 
 
 def create_app():
@@ -26,6 +30,9 @@ def create_app():
 
     # Registrar a API de colaboradores
     app.register_blueprint(colaboradores_bp)
+    app.register_blueprint(acessos_bp)
+    app.register_blueprint(eventos_bp)
+
 
     @app.route("/")
     def home():
