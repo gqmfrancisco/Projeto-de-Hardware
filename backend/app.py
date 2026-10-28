@@ -1,4 +1,4 @@
-
+from routes.analise import analise_bp
 from flask import Flask, jsonify
 
 from config import Config
@@ -11,6 +11,7 @@ from routes.colaboradores import colaboradores_bp
 
 # Registrar as APIs
 from routes.acessos import acessos_bp
+from routes.analise import analise_bp
 
 
 def create_app():
@@ -32,6 +33,7 @@ def create_app():
     app.register_blueprint(colaboradores_bp)
     app.register_blueprint(acessos_bp)
     app.register_blueprint(eventos_bp)
+    app.register_blueprint(analise_bp)
 
 
     @app.route("/")
